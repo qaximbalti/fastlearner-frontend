@@ -24,7 +24,7 @@ pipeline {
             steps {
                 sh '''
                 rm -rf /var/www/angular-app/*
-                cp -r dist/OPEN_SOURCE_FL/* /var/www/angular-app/
+                cp -r dist/fast-learner-app/* /var/www/angular-app/
                 '''
             }
         }
