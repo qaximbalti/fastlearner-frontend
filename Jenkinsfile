@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        PATH = "/usr/local/bin:/usr/bin:/bin"  // Ensure ng is available
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -23,8 +27,8 @@ pipeline {
         stage('Deploy to Nginx') {
             steps {
                 sh '''
-                rm -rf /var/www/angular-app/*
-                cp -r dist/fast-learner-app/* /var/www/angular-app/
+                sudo rm -rf /var/www/angular-app/*
+                sudo cp -r dist/fast-learner-app/* /var/www/angular-app/
                 '''
             }
         }
