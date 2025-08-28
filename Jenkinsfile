@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        PATH = "/usr/local/bin:/usr/bin:/bin"  // Ensure ng is available
+        PATH = "/usr/local/bin:/usr/bin:/bin:$HOME/.npm-global/bin"
     }
 
     stages {
@@ -14,7 +14,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                sh 'npm ci'  // faster and reliable than npm install
             }
         }
 
@@ -26,11 +26,21 @@ pipeline {
 
         stage('Deploy to Nginx') {
             steps {
+                // Assuming Jenkins user has write access to /var/www/angular-app
                 sh '''
-                sudo rm -rf /var/www/angular-app/*
-                sudo cp -r dist/fast-learner-app/* /var/www/angular-app/
+                    rm -rf /var/www/angular-app/*
+                    cp -r dist/fast-learner-app/* /var/www/angular-app/
                 '''
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Angular app deployed successfully!'
+        }
+        failure {
+            echo 'Deployment failed. Check console output.'
         }
     }
 }
