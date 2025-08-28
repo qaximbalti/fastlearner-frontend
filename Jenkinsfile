@@ -37,10 +37,10 @@ pipeline {
 
     post {
         success {
-            echo 'Angular app deployed successfully!'
+            echo '✅ Angular app deployed successfully!'
         }
         failure {
-            echo 'Deployment failed. Check console output.'
+            echo '❌ Deployment failed. Check console output.'
         }
     }
 }
